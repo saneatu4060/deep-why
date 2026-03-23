@@ -1,7 +1,7 @@
 # 開発ルール：論理思考トレーニング『Deep Why』
 
-**バージョン**: 1.1
-**最終更新**: 2026-03-17
+**バージョン**: 1.2
+**最終更新**: 2026-03-23
 **ステータス**: 確定（開発チームレビュー済み）
 
 ---
@@ -21,7 +21,8 @@ main                    # 常にデプロイ可能な状態を保つ。直接pus
 ├── feature/xxx         # 機能開発
 ├── fix/xxx             # バグ修正
 ├── docs/xxx            # ドキュメント更新
-└── refactor/xxx        # リファクタリング
+├── refactor/xxx        # リファクタリング
+└── test/xxx            # 動作確認・検証
 ```
 
 ### 運用ルール
@@ -33,6 +34,7 @@ main                    # 常にデプロイ可能な状態を保つ。直接pus
 | `fix/*` | バグ修正 | 自由 | PRで `main` へ |
 | `docs/*` | ドキュメント更新 | 自由 | PRで `main` へ |
 | `refactor/*` | リファクタリング | 自由 | PRで `main` へ |
+| `test/*` | 動作確認・検証 | 自由 | PRで `main` へ |
 
 ### ブランチ命名規則
 
@@ -52,6 +54,10 @@ docs/add-setup-guide
 
 # refactor: 対象モジュールを明記
 refactor/langchain-agent
+
+# test: 確認・検証内容を明記
+test/cors-check
+test/scoring-accuracy
 ```
 
 ---
@@ -79,7 +85,7 @@ refactor/langchain-agent
 | `docs` | ドキュメントのみの変更 |
 | `style` | コードの意味に影響しない変更（フォーマット等） |
 | `refactor` | バグ修正・機能追加を伴わないコード変更 |
-| `test` | テストの追加・修正 |
+| `test` | テストコードの追加・修正、および動作確認・検証作業 |
 | `chore` | ビルドプロセスや補助ツールの変更 |
 | `perf` | パフォーマンス改善 |
 
@@ -112,6 +118,7 @@ refactor/langchain-agent
 feat(backend): POST /sessions エンドポイントを追加
 fix(frontend): スコアバーのアニメーションが止まらない問題を修正
 docs(docs): 外部設計書にAPI定義を追記
+test(frontend): フロントエンド・バックエンドの疎通確認（CORS）
 
 # ドメイン層のscope
 feat(scoring): 採点プロンプトにFew-shotサンプルを追加
@@ -147,6 +154,16 @@ WIP                    # 作業中のコミットをそのままpushしない
 ### バックエンド（Python / FastAPI）
 
 **インデント**：**スペース4文字**（PEP 8標準。blackのデフォルトに合わせる）
+
+**依存管理**：現フェーズは `pip` + `requirements.txt` で運用する。将来的に `uv` + `pyproject.toml` への移行を予定している。
+
+```bash
+# 現フェーズ（pip）
+pip install -r requirements.txt
+
+# 将来（uv移行後）
+uv sync
+```
 
 **スタイル**
 - [PEP 8](https://peps.python.org/pep-0008/) に準拠
@@ -467,6 +484,9 @@ backend/
 | 1.1 | 2026-03-17 | §1 | 修正 | ブランチ戦略をGit FlowからGitHub Flowに変更。`develop` ブランチを廃止しv1.0リリース後の遅延導入とした |
 | 1.1 | 2026-03-17 | §2 | 修正 | コミットscopeにドメイン層（`scoring` / `questioning` / `ux`）を追加。物理レイヤーscopeと共存する形に変更 |
 | 1.1 | 2026-03-17 | §3 | 修正 | バックエンドのインデントをスペース2文字から4文字（PEP 8標準・black準拠）に修正 |
-| 1.1 | 2026-03-17 | §3 | 修正 | プロンプト管理をテンプレート構造（`prompts.py`・git管理）とFew-shotサンプル（`data/config/few_shots.json`・git管理外）に分離。個人の思考データがリポジトリに混入するリスクを防止 |
+| 1.1 | 2026-03-17 | §3 | 修正 | プロンプト管理をテンプレート構造（`prompts.py`・git管理）とFew-shotサンプル（`data/config/few_shots.json`・git管理外）に分離 |
 | 1.1 | 2026-03-17 | §5 | 修正 | `data/` の自動生成処理に `few_shots_example.json` のコピー処理を追加 |
-| 1.1 | 2026-03-17 | §6 | 修正 | LLMモック化を必須条件として明記。`LLMInterface` による抽象化・`FakeLLM` によるテスト差し替え設計を追加。`tests/fixtures/` にJSONフィクスチャを配置するルールを追加 |
+| 1.1 | 2026-03-17 | §6 | 修正 | LLMモック化を必須条件として明記。`LLMInterface` による抽象化・`FakeLLM` によるテスト差し替え設計を追加 |
+| 1.2 | 2026-03-23 | §1 | 追記 | ブランチ構成・運用ルール・命名規則に `test/*`（動作確認・検証）を追加 |
+| 1.2 | 2026-03-23 | §2 | 修正 | `test` typeの用途に「動作確認・検証作業」を追記。コミットメッセージ例に `test` の例を追加 |
+| 1.2 | 2026-03-23 | §3 | 追記 | バックエンドの依存管理に現状（pip + requirements.txt）と将来（uv移行予定）を明記 |
