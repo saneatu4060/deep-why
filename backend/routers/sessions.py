@@ -6,7 +6,6 @@ router = APIRouter()
 
 # ==========================================
 # レスポンスモデル定義
-# (※将来的には models/schemas.py 等に切り出すことを推奨します)
 # ==========================================
 
 
@@ -18,26 +17,25 @@ class SessionResponse(BaseModel):
     created_at: str
     updated_at: str
     turn_count: int
-    average_score: Optional[float] = None
-
+    average_score: Optional[float] = None  # 思考中の場合はスコアが存在しないためOptional
 
 # ==========================================
 # エンドポイント
 # ==========================================
+
+
 @router.post("")
-async def create_session():
+async def create_session() -> dict:
     """新規セッション作成"""
     return {"message": "stub: create_session"}
 
 
 @router.get("", response_model=List[SessionResponse])
-async def get_sessions():
+async def get_sessions() -> List[SessionResponse]:
     """
     S01・S04用: セッション一覧取得
-    S01の「最近のセッション」表示用のモックデータを返却します。
+    テストコードとS01の「最近のセッション」表示に合わせたモックデータを返却
     """
-    # TODO: 将来的にはサービス層を呼び出し、SQLiteの sessions テーブルから
-    # 日付の降順でセッションログを取得するロジックを実装する。
     return [
         SessionResponse(
             session_id="sess_001",
@@ -63,37 +61,37 @@ async def get_sessions():
 
 
 @router.get("/{session_id}")
-async def get_session(session_id: str):
+async def get_session(session_id: str) -> dict:
     """特定セッションの詳細取得"""
     return {"message": f"stub: get_session {session_id}"}
 
 
 @router.patch("/{session_id}")
-async def update_session(session_id: str):
+async def update_session(session_id: str) -> dict:
     """セッションのステータス更新（途中離脱等）"""
     return {"message": f"stub: update_session {session_id}"}
 
 
 @router.delete("/{session_id}")
-async def delete_session(session_id: str):
-    """セッション削除（SQLiteおよびChromaDBのデータ削除）"""
+async def delete_session(session_id: str) -> dict:
+    """セッション削除"""
     return {"message": f"stub: delete_session {session_id}"}
 
 
 @router.post("/{session_id}/turns")
-async def create_turn(session_id: str):
+async def create_turn(session_id: str) -> dict:
     """ユーザー入力を送信し、採点・問い生成を実行"""
     return {"message": f"stub: create_turn {session_id}"}
 
 
 @router.get("/{session_id}/turns")
-async def get_turns(session_id: str):
+async def get_turns(session_id: str) -> dict:
     """セッション内の全ターン取得"""
     return {"message": f"stub: get_turns {session_id}"}
 
 
 @router.get("/{session_id}/result")
-async def get_result(session_id: str):
+async def get_result(session_id: str) -> dict:
     """セッション完了後の論理マップを取得"""
     return {
         "session_id": session_id,

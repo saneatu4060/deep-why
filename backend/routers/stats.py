@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+router = APIRouter()
+
 # 将来的には DB操作ロジックを分離するため、以下のようにサービス層をインポートします
 # from services import stats_service
 
@@ -37,12 +39,12 @@ async def get_summary():
 
 
 @router.get("/score-history")
-async def get_score_history():
-    """S04グラフ用: 長期スコア推移取得"""
+async def get_score_history() -> dict:
+    """S04グラフ用: 長期スコア推移取得（今回はスタブのみ）"""
     return {"message": "stub: get_score_history"}
 
 
 @router.get("/category-distribution")
-async def get_category_distribution():
-    """S04グラフ用: テーマカテゴリ分布取得"""
+async def get_category_distribution() -> dict:
+    """S04グラフ用: テーマカテゴリ分布取得（今回はスタブのみ）"""
     return {"message": "stub: get_category_distribution"}
