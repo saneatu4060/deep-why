@@ -50,3 +50,12 @@ export const getTurns = async (sessionId: string): Promise<any[]> => {
     const response = await apiClient.get<any[]>(`/sessions/${sessionId}/turns`);
     return response.data;
 };
+
+/**
+ * GET /sessions/{session_id}/result
+ * セッション完了後の論理マップを取得する（Mermaid生成完了後に status: "completed" が返る）
+ */
+export const getSessionResult = async (sessionId: string): Promise<any> => {
+    const response = await apiClient.get(`/sessions/${sessionId}/result`);
+    return response.data;
+};
