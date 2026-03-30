@@ -152,8 +152,20 @@ async def get_turns(session_id: str) -> List[dict]:
 
 @router.get("/{session_id}/result")
 async def get_result(session_id: str) -> dict:
+    """S03: セッション完了後の論理マップを取得するスタブ"""
+    # フロントエンドの描画テスト用として、常に「完了」状態とMermaidグラフを返します。
+    # 本実装では生成中("generating")と完了("completed")を動的に切り替えます。
+    mock_mermaid = """graph TD
+    A[タスクが分解できない] --> B[要件の解像度が低い]
+    B --> C[何が分からないかが分からない]
+    C --> D[ドメイン知識の不足]
+    C --> E[ステークホルダーとの認識ズレ]
+    D --> F[有識者へのヒアリング]
+    E --> G[要件定義書の再確認]
+    """
+
     return {
         "session_id": session_id,
-        "logic_map": None,
-        "status": "generating",
+        "logic_map": mock_mermaid,
+        "status": "completed",
     }
