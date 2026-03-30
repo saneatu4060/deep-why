@@ -38,3 +38,32 @@ export interface CreateSessionRequest {
     theme: string;
     category: string;
 }
+
+// ==========================================
+// S02: セッション更新用の型定義
+// ==========================================
+export interface SessionUpdateRequest {
+    status: 'in_progress' | 'completed' | 'abandoned';
+}
+
+// ==========================================
+// S02: ターン系の型定義
+// ==========================================
+export interface TurnRequest {
+    user_utterance: string;
+}
+
+export interface TurnScores {
+    concreteness: number;
+    causality: number;
+    definitiveness: number;
+}
+
+export interface TurnResponse {
+    turn_id: string;
+    scores: TurnScores;
+    reason: string;
+    ai_question: string | null;
+    is_completed: boolean;
+    claim: string | null;
+}
