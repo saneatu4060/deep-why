@@ -169,3 +169,9 @@ async def get_result(session_id: str) -> dict:
         "logic_map": mock_mermaid,
         "status": "completed",
     }
+
+
+@router.delete("/{session_id}")
+async def delete_session(session_id: str) -> dict:
+    """S04: セッションと付随するベクトルデータを削除するスタブ"""
+    return {"message": f"Session {session_id} and associated vectors deleted"}
