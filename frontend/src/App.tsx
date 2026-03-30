@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Session } from './pages/Session';
-// import { Result } from './pages/Result';
+import { Result } from './pages/Result';
 // import { History } from './pages/History';
 // import { Settings } from './pages/Settings';
 
@@ -21,8 +21,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/session/:sessionId" element={<Session />} />
-            {/* <Route path="/result/:sessionId" element={<Result />} />
-            <Route path="/history" element={<History />} />
+            <Route path="/result/:sessionId" element={<Result />} />
+            {/* <Route path="/history" element={<History />} />
             <Route path="/settings" element={<Settings />} /> */}
           </Routes>
         </main>
