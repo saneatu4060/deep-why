@@ -67,3 +67,16 @@ export interface TurnResponse {
     is_completed: boolean;
     claim: string | null;
 }
+
+// ==========================================
+// S05: 設定系の型定義
+// ==========================================
+export interface SettingsResponse {
+    min_turns: number;
+    max_turns: number;
+}
+
+export interface SettingsUpdateRequest {
+    min_turns: number;
+    max_turns: number;
+}
