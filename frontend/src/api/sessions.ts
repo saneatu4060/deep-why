@@ -59,3 +59,12 @@ export const getSessionResult = async (sessionId: string): Promise<any> => {
     const response = await apiClient.get(`/sessions/${sessionId}/result`);
     return response.data;
 };
+
+/**
+ * DELETE /sessions/{session_id}
+ * セッションを削除する
+ */
+export const deleteSession = async (sessionId: string): Promise<any> => {
+    const response = await apiClient.delete(`/sessions/${sessionId}`);
+    return response.data;
+};
