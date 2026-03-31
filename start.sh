@@ -2,7 +2,7 @@
 
 # =================================================================
 # Deep Why 起動スクリプト (start.sh)
-# 開発ルール v1.2 / 内部設計書 v3.2 準拠
+# 開発ルール v1.3 / 内部設計書 v3.2 準拠
 # =================================================================
 
 # 色の定義
@@ -27,7 +27,7 @@ mkdir -p data/config
 mkdir -p data/chroma_db
 
 FEW_SHOT_PATH="data/config/few_shots.json"
-EXAMPLE_PATH="backend/llm/few_shots_example.json"
+EXAMPLE_PATH="01_backend/llm/few_shots_example.json"
 
 if [ ! -f "$FEW_SHOT_PATH" ]; then
     if [ -f "$EXAMPLE_PATH" ]; then
@@ -39,8 +39,9 @@ if [ ! -f "$FEW_SHOT_PATH" ]; then
 fi
 
 # 3. バックエンド (FastAPI) の起動
-cd backend
-# Windowsのvenvパス構造（Scripts/activate）に対応
+# 修正：フォルダ名を 01_backend に変更 
+cd 01_backend
+# 仮想環境の有効化：Windowsのパス構造に対応 
 source .venv/Scripts/activate 2>/dev/null || source .venv/bin/activate 2>/dev/null
 
 echo -e "${GREEN}🚀 バックエンドを起動しています (localhost:8000)...${NC}"
@@ -49,7 +50,8 @@ BACKEND_PID=$!
 cd ..
 
 # 4. フロントエンド (React) の起動
-cd frontend
+# 修正：フォルダ名を 02_frontend に変更 
+cd 02_frontend
 
 # Ctrl+C でバックエンドも停止させる
 trap "echo -e '${RED}🛑 サーバーを停止しています...${NC}'; kill $BACKEND_PID; exit" SIGINT SIGTERM
