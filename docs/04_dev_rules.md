@@ -1,8 +1,7 @@
 # 開発ルール：論理思考トレーニング『Deep Why』
 
-**バージョン**: 1.2
-**最終更新**: 2026-03-23
-**ステータス**: 確定（開発チームレビュー済み）
+**バージョン**: 1.3
+**最終更新**: 2026-03-31
 
 ---
 
@@ -192,7 +191,7 @@ def calc_avg_score(scores):
 **ディレクトリ構成（バックエンド）**
 
 ```
-backend/
+01_backend/
 ├── main.py                   # FastAPIエントリーポイント
 ├── routers/                  # APIルーター
 │   ├── sessions.py
@@ -220,9 +219,9 @@ backend/
 
 | 種別 | 保存場所 | git管理 | 理由 |
 |:--|:--|:--|:--|
-| プロンプトのテンプレート構造 | `backend/llm/prompts.py` | ✅ する | 構造はコードの一部 |
+| プロンプトのテンプレート構造 | `01_backend/llm/prompts.py` | ✅ する | 構造はコードの一部 |
 | Few-shotサンプル | `data/config/few_shots.json` | ❌ しない | 個人の思考データが混入するリスクがある |
-| Few-shotのサンプル例（ダミー） | `backend/llm/few_shots_example.json` | ✅ する | 初回セットアップ時のひな形として使用 |
+| Few-shotのサンプル例（ダミー） | `01_backend/llm/few_shots_example.json` | ✅ する | 初回セットアップ時のひな形として使用 |
 
 ```python
 # prompts.py の例（テンプレート構造のみ。Few-shotは外部から読み込む）
@@ -269,7 +268,7 @@ def build_scoring_prompt(user_input: str, few_shots: list[dict]) -> str:
 **ディレクトリ構成（フロントエンド）**
 
 ```
-frontend/
+02_frontend/
 ├── src/
 │   ├── pages/            # 画面単位（S01〜S05対応）
 │   │   ├── Home.tsx          # S01
@@ -399,7 +398,7 @@ Thumbs.db
 # start.sh の初回セットアップ処理（抜粋）
 mkdir -p data/config
 if [ ! -f data/config/few_shots.json ]; then
-  cp backend/llm/few_shots_example.json data/config/few_shots.json
+  cp 01_backend/llm/few_shots_example.json data/config/few_shots.json
   echo "Few-shotサンプルを data/config/few_shots.json に生成しました"
 fi
 ```
@@ -413,7 +412,7 @@ fi
 Ollama（推論20〜60秒）をCIで動かすのは現実的ではない。LLMの呼び出し部分は**インターフェースで抽象化**し、テスト時はFake実装に差し替えられる構造にする。
 
 ```python
-# backend/llm/interfaces.py
+# 01_backend/llm/interfaces.py
 from abc import ABC, abstractmethod
 
 class LLMInterface(ABC):
@@ -443,7 +442,7 @@ class FakeLLM(LLMInterface):
 ### テスト用フィクスチャの配置
 
 ```
-backend/
+01_backend/
 └── tests/
     ├── fixtures/
     │   ├── score_success.json       # 採点成功パターン
@@ -490,3 +489,5 @@ backend/
 | 1.2 | 2026-03-23 | §1 | 追記 | ブランチ構成・運用ルール・命名規則に `test/*`（動作確認・検証）を追加 |
 | 1.2 | 2026-03-23 | §2 | 修正 | `test` typeの用途に「動作確認・検証作業」を追記。コミットメッセージ例に `test` の例を追加 |
 | 1.2 | 2026-03-23 | §3 | 追記 | バックエンドの依存管理に現状（pip + requirements.txt）と将来（uv移行予定）を明記 |
+| 1.3 | 2026-03-31 | §3・§6 | 修正 | フォルダ名`backend/`を`01_backend/`に変更 |
+| 1.3 | 2026-03-31 | §3| 修正 | フォルダ名`frontend/`を`02_frontend/`に変更 |
