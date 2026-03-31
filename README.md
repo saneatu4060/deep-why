@@ -93,9 +93,9 @@ cd ..
 
 | ドキュメント | 内容 |
 |:--|:--|
-| [要件定義書](docs/01_requirements.md) | システムの目的・機能要件・技術スタック |
-| [外部設計書](docs/02_external_design.md) | 画面設計・画面遷移・API定義 |
-| [内部設計書](docs/03_internal_design.md) | アーキテクチャ・処理フロー・DB設計 |
+| [要件定義書](00_docs/01_requirements.md) | システムの目的・機能要件・技術スタック |
+| [外部設計書](00_docs/02_external_design.md) | 画面設計・画面遷移・API定義 |
+| [内部設計書](00_docs/03_internal_design.md) | アーキテクチャ・処理フロー・DB設計 |
 
 ---
 
@@ -115,7 +115,7 @@ cd backend && ruff check .
 cd frontend && npm run lint
 ```
 
-開発ルール・ブランチ戦略・コミット規約については [開発ルール](docs/04_dev_rules.md) を参照してください。
+開発ルール・ブランチ戦略・コミット規約については [開発ルール](00_docs/04_dev_rules.md) を参照してください。
 
 ---
 
